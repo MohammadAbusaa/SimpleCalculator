@@ -80,3 +80,12 @@ let ``Test numbers bigger than 1000 to be ignored`` () =
     expected <- 1001
     actual <- Calculator.add "1001,2000,3000,500,500,1"
     Assert.That(actual, Is.EqualTo(expected))
+
+[<Test>]
+let ``Test delimiter to be in different lengths`` () =
+    let mutable expected = 10
+    let mutable actual = Calculator.add "//[***]\n1***2***3***4"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- 25
+    actual <- Calculator.add "//[+++]\n2+++4+++6+++13"
+    Assert.That(actual, Is.EqualTo(expected))

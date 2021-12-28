@@ -13,8 +13,8 @@ module Calculator =
             0
         else
             int(i)
-    let reducer (d : char[]) (s : string) =
-        let ints = s.Split(d) |> Array.map (comparator)
+    let reducer (d : string[]) (s : string) =
+        let ints = s.Split(d, StringSplitOptions.TrimEntries) |> Array.map (comparator)
         if negatives.Length > 0 then
             raise (FormatException(("Negatives are not allowed! the negatives are:\n" + String.concat "," (negatives |> List.rev))))
         else ints |> Array.reduce (fun a b -> a + b)
@@ -23,8 +23,13 @@ module Calculator =
         if String.IsNullOrEmpty str then
             0
         else if str.StartsWith("//") then
-            reducer [|str.[2]|] str.[4..]
+            let nlIndex = str.IndexOf('\n')
+            let firstLine = str.Substring(2, nlIndex - 2)
+            if(firstLine.Contains('[') && firstLine.Contains(']')) then
+                reducer ([|firstLine.Substring(1, firstLine.IndexOf(']') - 1)|]) str.[nlIndex + 1..]
+            else
+                reducer ([|str.Substring(2,1)|]) str.[4..]
         else if String.exists (fun c -> c = ',' || c = '\n') str then
-            reducer [|','; '\n'|] str
+            reducer [|","; "\n"|] str
         else
             int (str)
