@@ -36,3 +36,12 @@ let ``Test two number string to return the integer value of their summation`` ()
     expected <- 0
     actual <- Calculator.add "100,-100"
     Assert.That(actual, Is.EqualTo(expected))
+
+[<Test>]
+let ``Test more than two numbers to return the integer value of their summation`` () =
+    let mutable expected = 90
+    let mutable actual = Calculator.add "10,20,30,40,50,-60"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- -300
+    actual <- Calculator.add "-10,-20,-70,-100,-200,100"
+    Assert.That(actual, Is.EqualTo(expected))
