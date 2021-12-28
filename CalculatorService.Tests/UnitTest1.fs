@@ -45,3 +45,19 @@ let ``Test more than two numbers to return the integer value of their summation`
     expected <- -300
     actual <- Calculator.add "-10,-20,-70,-100,-200,100"
     Assert.That(actual, Is.EqualTo(expected))
+
+[<Test>]
+let ``Test newline as another separator`` () =
+    let mutable expected = 66
+    let mutable actual = Calculator.add "1
+    2
+    500,-400
+    -37"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- -10
+    actual <- Calculator.add "5,-10
+    -1
+    -2
+    -3
+    1"
+    Assert.That(actual, Is.EqualTo(expected))
