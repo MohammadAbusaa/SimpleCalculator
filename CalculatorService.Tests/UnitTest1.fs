@@ -61,3 +61,20 @@ let ``Test newline as another separator`` () =
     -3
     1"
     Assert.That(actual, Is.EqualTo(expected))
+
+[<Test>]
+let ``Test different delimiters to be supported`` () =
+    let mutable expected = 15
+    let mutable actual = Calculator.add "//;
+    1;2;3;4;5"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- -20
+    actual <- Calculator.add "//d
+    -2d-4d-6d-8"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- 0
+    actual <- Calculator.add "1,3
+    5
+    7
+    9,-25"
+    Assert.That(actual, Is.EqualTo(expected))
