@@ -89,3 +89,14 @@ let ``Test delimiter to be in different lengths`` () =
     expected <- 25
     actual <- Calculator.add "//[+++]\n2+++4+++6+++13"
     Assert.That(actual, Is.EqualTo(expected))
+
+[<Test>]
+let ``Test multiple delimiters`` () =
+    let mutable expected = 6
+    let mutable actual = Calculator.add "//[#][$]\n1#2$3"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- 40
+    actual <- Calculator.add "//[^][*][$][a]\n2$4$6^6a2a5*5*10"
+    Assert.That(actual, Is.EqualTo(expected))
+    actual <- Calculator.add "//[^^^^][***][$][aa]\n2$4$6^^^^6aa2aa5***5***10"
+    Assert.That(actual, Is.EqualTo(expected))

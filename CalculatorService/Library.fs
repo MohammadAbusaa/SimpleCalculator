@@ -26,7 +26,7 @@ module Calculator =
             let nlIndex = str.IndexOf('\n')
             let firstLine = str.Substring(2, nlIndex - 2)
             if(firstLine.Contains('[') && firstLine.Contains(']')) then
-                reducer ([|firstLine.Substring(1, firstLine.IndexOf(']') - 1)|]) str.[nlIndex + 1..]
+                reducer (firstLine.Split([|'[';']'|])) str.[nlIndex + 1..]
             else
                 reducer ([|str.Substring(2,1)|]) str.[4..]
         else if String.exists (fun c -> c = ',' || c = '\n') str then
