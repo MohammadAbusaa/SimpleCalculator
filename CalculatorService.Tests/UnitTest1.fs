@@ -71,3 +71,12 @@ let ``Test different delimiters to be supported`` () =
 let ``Test throwing an exception when sending negative numbers`` () =
     Assert.Throws<System.FormatException>((fun _ -> Calculator.add "1,2,-3,-4,-5,-6" |> ignore), "Negatives are not allowed! the negatives are:\n-3,-4,-5,-6") |> ignore
     Assert.Throws<System.FormatException>((fun _ -> Calculator.add "//$\n1$2$-39$-40$-53$-26" |> ignore), "Negatives are not allowed! the negatives are:\n-39,-40,-53,-26") |> ignore
+
+[<Test>]
+let ``Test numbers bigger than 1000 to be ignored`` () =
+    let mutable expected = 2
+    let mutable actual = Calculator.add "2,1001"
+    Assert.That(actual, Is.EqualTo(expected))
+    expected <- 1001
+    actual <- Calculator.add "1001,2000,3000,500,500,1"
+    Assert.That(actual, Is.EqualTo(expected))

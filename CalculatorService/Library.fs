@@ -5,9 +5,14 @@ open System
 module Calculator =
     let mutable negatives = []
     let comparator (i : string) =
-        if int(i) < 0 then
+        let intVal = int(i)
+        if intVal < 0 then
             negatives <- i :: negatives
-        int(i)
+            intVal
+        else if intVal > 1000 then
+            0
+        else
+            int(i)
     let reducer (d : char[]) (s : string) =
         let ints = s.Split(d) |> Array.map (comparator)
         if negatives.Length > 0 then
